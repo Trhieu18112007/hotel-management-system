@@ -1,0 +1,100 @@
+erDiagram
+    NHAN_VIEN {
+        int MaNV PK
+        nvarchar HoTen
+        varchar TenDangNhap UK
+        varchar MatKhauHash
+        nvarchar VaiTro "Quản lý / Lễ tân / Bếp"
+        varchar SDT
+        bit TrangThai
+    }
+    KHACH_HANG {
+        int MaKH PK
+        nvarchar HoTen
+        varchar CCCD UK
+        varchar SDT
+        varchar Email
+        nvarchar DiaChi
+        datetime NgayTao
+    }
+    LOAI_PHONG {
+        int MaLoai PK
+        nvarchar TenLoai UK
+        decimal GiaMotDem
+        int SoNguoiToiDa
+        nvarchar MoTa
+    }
+    PHONG {
+        int MaPhong PK
+        varchar SoPhong UK
+        int MaLoai FK
+        int Tang
+        nvarchar TrangThai "Trống / Đang thuê / Bảo trì"
+    }
+    DAT_PHONG {
+        int MaDat PK
+        int MaKH FK
+        int MaLoai FK
+        datetime NgayDat
+        date NgayNhan
+        date NgayTra
+        nvarchar TrangThai "Đã đặt / Đã nhận / Đã hủy"
+    }
+    PHIEU_THUE_PHONG {
+        int MaPhieu PK
+        int MaDat FK "UNIQUE"
+        int MaPhong FK
+        datetime NgayNhanThucTe
+        datetime NgayTraThucTe
+        decimal GiaThue
+        nvarchar TrangThai "Đang thuê / Đã trả"
+    }
+    MON_AN {
+        int MaMon PK
+        nvarchar TenMon
+        decimal DonGia
+        nvarchar LoaiMon
+        nvarchar TrangThai
+    }
+    PHIEU_GOI_MON {
+        int MaGoiMon PK
+        int MaPhieu FK
+        int MaNV FK
+        datetime NgayGoi
+    }
+    CHI_TIET_GOI_MON {
+        int MaGoiMon PK, FK
+        int MaMon PK, FK
+        int SoLuong
+        decimal DonGia
+    }
+    HOA_DON {
+        int MaHD PK
+        int MaPhieu FK "UNIQUE"
+        int MaNV FK
+        datetime NgayLap
+        decimal TongTien
+        nvarchar TrangThai "Chưa thanh toán / Đã thanh toán"
+    }
+    CHI_TIET_HOA_DON {
+        int MaCT PK
+        int MaHD FK
+        nvarchar LoaiDong "Phòng / Món"
+        nvarchar NoiDung
+        int SoLuong
+        decimal DonGia
+        decimal ThanhTien
+    }
+
+    LOAI_PHONG ||--o{ PHONG : "phân loại"
+    LOAI_PHONG ||--o{ DAT_PHONG : "được đặt theo loại"
+    KHACH_HANG ||--o{ DAT_PHONG : "đặt"
+    DAT_PHONG ||--o| PHIEU_THUE_PHONG : "chuyển thành khi nhận phòng"
+    PHONG ||--o{ PHIEU_THUE_PHONG : "được gán"
+    PHIEU_THUE_PHONG ||--o{ PHIEU_GOI_MON : "gọi món"
+    NHAN_VIEN ||--o{ PHIEU_GOI_MON : "lập"
+    PHIEU_GOI_MON ||--|{ CHI_TIET_GOI_MON : "gồm"
+    MON_AN ||--o{ CHI_TIET_GOI_MON : "được gọi"
+    PHIEU_THUE_PHONG ||--o| HOA_DON : "tính tiền"
+    NHAN_VIEN ||--o{ HOA_DON : "lập"
+    HOA_DON ||--|{ CHI_TIET_HOA_DON : "gồm"
