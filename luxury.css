@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --navy-950: #060B19;
+    --navy-900: #0B132B;
+    --navy-800: #1C2541;
+    --gold-500: #C5A059;
+    --gold-400: #D4AF37;
+    --gold-300: #E6C875;
+    --ivory-50: #FAF8F5;
+    --ivory-100: #F3EFEA;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--ivory-50);
+    color: var(--navy-900);
+    overflow-x: hidden;
+}
+
+.font-serif-luxury {
+    font-family: 'Cormorant Garamond', serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--ivory-100);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--gold-500);
+    border-radius: 3px;
+}
+
+/* Hiệu ứng viền và nút Luxury */
+.gold-gradient-bg {
+    background: linear-gradient(135deg, #C5A059 0%, #E6C875 50%, #B38E46 100%);
+}
+
+.navy-luxury-bg {
+    background: radial-gradient(circle at top right, #1C2541 0%, #0B132B 65%, #060B19 100%);
+}
+
+.luxury-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(197, 160, 89, 0.22);
+    box-shadow: 0 10px 30px -10px rgba(11, 19, 43, 0.06);
+    transition: all 0.25s ease;
+}
+
+.luxury-card:hover {
+    border-color: rgba(197, 160, 89, 0.55);
+    box-shadow: 0 14px 35px -10px rgba(197, 160, 89, 0.15);
+}
+
+.nav-item.active {
+    background: linear-gradient(90deg, rgba(197, 160, 89, 0.2) 0%, rgba(197, 160, 89, 0) 100%);
+    border-left: 3px solid var(--gold-500);
+    color: var(--gold-300);
+}
