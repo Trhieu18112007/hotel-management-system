@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renaissance Riverside Hotel Saigon | Quản Lý Thực Đơn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/luxury.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="min-h-screen flex flex-col lg:flex-row">
+
+    <!-- SIDEBAR ĐIỀU HƯỚNG CHUNG -->
+    <aside class="w-72 navy-luxury-bg text-stone-200 flex flex-col justify-between border-r border-amber-500/20 hidden lg:flex">
+        <div>
+            <div class="p-6 border-b border-amber-500/20">
+                <p class="text-[10px] uppercase tracking-[0.28em] text-amber-400">Saigon • Vietnam</p>
+                <h2 class="font-serif-luxury text-2xl font-bold text-white tracking-wider mt-0.5">RENAISSANCE</h2>
+                <p class="text-[11px] text-stone-400">Riverside Hotel Management</p>
+            </div>
+            <nav class="p-4 space-y-1.5">
+                <a href="index.html" class="w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm font-medium text-stone-300 hover:bg-white/5 transition">
+                    <span>❖</span> <span>Trang Dashboard / Lễ Tân</span>
+                </a>
+                <a href="menu.html" class="nav-item active w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm font-medium text-stone-300 transition">
+                    <span>❖</span> <span>Quản Lý Thực Đơn Nhà Hàng</span>
+                </a>
+                <a href="order.html" class="w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm font-medium text-stone-300 hover:bg-white/5 transition">
+                    <span>❖</span> <span>Gọi Món & Dịch Vụ (Order)</span>
+                </a>
+                <a href="invoice.html" class="w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm font-medium text-stone-300 hover:bg-white/5 transition">
+                    <span>❖</span> <span>Quản Lý Hóa Đơn</span>
+                </a>
+                <a href="checkout.html" class="w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm font-medium text-stone-300 hover:bg-white/5 transition">
+                    <span>❖</span> <span>Thanh Toán & Kế Toán</span>
+                </a>
+            </nav>
+        </div>
+        <div class="p-5 border-t border-amber-500/20">
+            <span class="text-xs text-stone-400">Marriott Bonvoy Luxury Collection</span>
+        </div>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="flex-1 flex flex-col min-w-0">
+        <header class="bg-white border-b border-stone-200 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+            <div>
+                <p class="text-[11px] uppercase tracking-widest text-amber-700 font-semibold">Renaissance Riverside Hotel Saigon</p>
+                <h1 class="font-serif-luxury text-2xl font-bold text-slate-900">Quản Lý Thực Đơn Nhà Hàng 5 Sao</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full gold-gradient-bg flex items-center justify-center font-serif-luxury font-bold text-slate-950 text-lg">R</div>
+            </div>
+        </header>
+
+        <main class="p-6 space-y-6 flex-1">
+            <!-- Thống kê Bento Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div class="luxury-card rounded-xl p-5 border-l-4 border-l-amber-600">
+                    <p class="text-xs uppercase tracking-wider text-slate-500">Tổng Số Món Ăn</p>
+                    <p id="statTotalMenu" class="font-serif-luxury text-4xl font-bold text-slate-900 mt-2">0</p>
+                </div>
+                <div class="luxury-card rounded-xl p-5 border-l-4 border-l-emerald-600">
+                    <p class="text-xs uppercase tracking-wider text-slate-500">Đang Phục Vụ</p>
+                    <p id="statActiveMenu" class="font-serif-luxury text-4xl font-bold text-emerald-700 mt-2">0</p>
+                </div>
+                <div class="luxury-card rounded-xl p-5 border-l-4 border-l-rose-600">
+                    <p class="text-xs uppercase tracking-wider text-slate-500">Tạm Hết Món</p>
+                    <p id="statOutMenu" class="font-serif-luxury text-4xl font-bold text-rose-700 mt-2">0</p>
+                </div>
+            </div>
+
+            <!-- Bảng danh sách thực đơn -->
+            <div class="luxury-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-serif-luxury text-xl font-bold text-slate-900">Danh Sách Món Ăn & Đồ Uống</h3>
+                    <button onclick="openMenuModal()" class="px-5 py-2.5 rounded-lg gold-gradient-bg text-slate-950 font-bold text-xs uppercase tracking-wider shadow-md hover:opacity-95">
+                        + Thêm Món Ăn Mới
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-stone-200 text-xs uppercase text-slate-500">
+                                <th class="py-3 px-4">Mã Món</th>
+                                <th class="py-3 px-4">Tên Món Ăn</th>
+                                <th class="py-3 px-4">Phân Loại</th>
+                                <th class="py-3 px-4">Đơn Giá (VNĐ)</th>
+                                <th class="py-3 px-4">Trạng Thái</th>
+                                <th class="py-3 px-4 text-right">Thao Tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="menuTableBody" class="text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL THÊM / SỬA MÓN ĂN -->
+    <div id="menuModal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 border border-amber-500/40 shadow-2xl">
+            <h3 id="menuModalTitle" class="font-serif-luxury text-2xl font-bold text-slate-900 mb-4">Thêm Món Ăn Mới</h3>
+            <form id="menuForm" class="space-y-4">
+                <input id="menuIdInput" type="hidden" />
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Tên Món Ăn</label>
+                    <input id="menuNameInput" type="text" required placeholder="VD: Bò bít tết sốt vang đỏ" class="w-full px-3 py-2 rounded border border-stone-300 text-sm" />
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Phân Loại</label>
+                    <select id="menuCategoryInput" class="w-full px-3 py-2 rounded border border-stone-300 text-sm">
+                        <option value="Món Khai Vị">Món Khai Vị</option>
+                        <option value="Món Chính">Món Chính</option>
+                        <option value="Hải Sản Cao Cấp">Hải Sản Cao Cấp</option>
+                        <option value="Tráng Miệng">Tráng Miệng</option>
+                        <option value="Đồ Uống & Rượu Vang">Đồ Uống & Rượu Vang</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Đơn Giá (VNĐ)</label>
+                    <input id="menuPriceInput" type="number" required placeholder="350000" class="w-full px-3 py-2 rounded border border-stone-300 text-sm" />
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Trạng Thái Phục Vụ</label>
+                    <select id="menuStatusInput" class="w-full px-3 py-2 rounded border border-stone-300 text-sm">
+                        <option value="AVAILABLE">Đang Phục Vụ (Available)</option>
+                        <option value="UNAVAILABLE">Tạm Hết Món (Unavailable)</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="document.getElementById('menuModal').classList.add('hidden')" class="px-4 py-2 rounded text-xs font-semibold border border-stone-300">Hủy</button>
+                    <button type="submit" class="px-5 py-2 rounded text-xs font-bold gold-gradient-bg text-slate-950">Lưu Món Ăn</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/restaurant-api.js"></script>
+    <script>
+        const api = window.restaurantApi;
+        let menuCache = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMenuTable();
+
+            document.getElementById('menuForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const id = document.getElementById('menuIdInput').value;
+                const dish = {
+                    id,
+                    name: document.getElementById('menuNameInput').value.trim(),
+                    category: document.getElementById('menuCategoryInput').value,
+                    price: Number(document.getElementById('menuPriceInput').value),
+                    status: document.getElementById('menuStatusInput').value
+                };
+                if (!dish.name || !(dish.price >= 0)) { alert('Vui lòng nhập tên món và đơn giá hợp lệ!'); return; }
+
+                try {
+                    if (id) await api.updateDish(dish); else await api.createDish(dish);
+                    document.getElementById('menuModal').classList.add('hidden');
+                    await loadMenuTable();
+                } catch (err) { alert('Không lưu được món ăn: ' + err.message); }
+            });
+        });
+
+        async function loadMenuTable() {
+            const tbody = document.getElementById('menuTableBody');
+            try {
+                menuCache = await api.getMenu();
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-rose-600 text-sm">${api.esc(err.message)}</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = '';
+
+            let activeCount = 0;
+            let outCount = 0;
+
+            menuCache.forEach(item => {
+                if (item.status === 'AVAILABLE') activeCount++; else outCount++;
+                const badge = item.status === 'AVAILABLE'
+                    ? '<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">Đang Phục Vụ</span>'
+                    : '<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-800">Tạm Hết</span>';
+
+                tbody.innerHTML += `
+                    <tr class="border-b border-stone-100 hover:bg-stone-50 transition">
+                        <td class="py-3 px-4 font-mono font-semibold text-slate-700">${api.esc(item.id)}</td>
+                        <td class="py-3 px-4 font-semibold text-slate-900">${api.esc(item.name)}</td>
+                        <td class="py-3 px-4 text-slate-600">${api.esc(item.category)}</td>
+                        <td class="py-3 px-4 font-bold text-amber-800">${item.price.toLocaleString()} ₫</td>
+                        <td class="py-3 px-4">${badge}</td>
+                        <td class="py-3 px-4 text-right space-x-2">
+                            <button onclick="editMenu('${item.id}')" class="px-3 py-1.5 rounded bg-slate-100 text-slate-800 text-xs font-semibold hover:bg-slate-200">Sửa</button>
+                            <button onclick="deleteMenu('${item.id}')" class="px-3 py-1.5 rounded bg-rose-50 text-rose-700 text-xs font-semibold hover:bg-rose-100">Xóa</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            if (menuCache.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-6 text-stone-400 text-sm">Thực đơn đang trống</td></tr>';
+            }
+            document.getElementById('statTotalMenu').innerText = menuCache.length;
+            document.getElementById('statActiveMenu').innerText = activeCount;
+            document.getElementById('statOutMenu').innerText = outCount;
+        }
+
+        function openMenuModal() {
+            document.getElementById('menuModalTitle').innerText = 'Thêm Món Ăn Mới';
+            document.getElementById('menuForm').reset();
+            document.getElementById('menuIdInput').value = '';
+            document.getElementById('menuModal').classList.remove('hidden');
+        }
+
+        function editMenu(id) {
+            const item = menuCache.find(m => String(m.id) === String(id));
+            if (!item) return;
+
+            document.getElementById('menuModalTitle').innerText = 'Chỉnh Sửa Món Ăn';
+            document.getElementById('menuIdInput').value = item.id;
+            document.getElementById('menuNameInput').value = item.name;
+            const catSel = document.getElementById('menuCategoryInput');
+            if (![...catSel.options].some(o => o.value === item.category)) {
+                catSel.add(new Option(item.category, item.category)); // phân loại có sẵn trong DB nhưng chưa có trong danh sách
+            }
+            catSel.value = item.category;
+            document.getElementById('menuPriceInput').value = item.price;
+            document.getElementById('menuStatusInput').value = item.status;
+            document.getElementById('menuModal').classList.remove('hidden');
+        }
+
+        async function deleteMenu(id) {
+            if (!confirm('Bạn có chắc chắn muốn xóa món ăn này khỏi thực đơn?')) return;
+            try {
+                await api.deleteDish(id);
+                await loadMenuTable();
+            } catch (err) { alert('Không xóa được món ăn: ' + err.message); }
+        }
+    </script>
+</body>
+</html>

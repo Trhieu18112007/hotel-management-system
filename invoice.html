@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renaissance Riverside Hotel Saigon | Quản Lý Hóa Đơn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/luxury.css" />
+</head>
+<body class="min-h-screen flex flex-col lg:flex-row">
+
+    <!-- SIDEBAR -->
+    <aside class="w-72 navy-luxury-bg text-stone-200 flex flex-col justify-between border-r border-amber-500/20 hidden lg:flex">
+        <div>
+            <div class="p-6 border-b border-amber-500/20">
+                <p class="text-[10px] uppercase tracking-[0.28em] text-amber-400">Saigon • Vietnam</p>
+                <h2 class="font-serif-luxury text-2xl font-bold text-white tracking-wider mt-0.5">RENAISSANCE</h2>
+                <p class="text-[11px] text-stone-400">Riverside Hotel Management</p>
+            </div>
+            <nav class="p-4 space-y-1.5">
+                <a href="index.html" class="w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm font-medium text-stone-300 hover:bg-white/5 transition">
+                    <span>❖</span> <span>Trang Dashboard / Lễ Tân</span>
+                </a>
+                <a href="menu.html" class="w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm font-medium text-stone-300 hover:bg-white/5 transition">
+                    <span>❖</span> <span>Quản Lý Thực Đơn Nhà Hàng</span>
+                </a>
+                <a href="order.html" class="w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm font-medium text-stone-300 hover:bg-white/5 transition">
+                    <span>❖</span> <span>Gọi Món & Dịch Vụ (Order)</span>
+                </a>
+                <a href="invoice.html" class="nav-item active w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm font-medium text-stone-300 transition">
+                    <span>❖</span> <span>Quản Lý Hóa Đơn</span>
+                </a>
+                <a href="checkout.html" class="w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm font-medium text-stone-300 hover:bg-white/5 transition">
+                    <span>❖</span> <span>Thanh Toán & Kế Toán</span>
+                </a>
+            </nav>
+        </div>
+        <div class="p-5 border-t border-amber-500/20">
+            <span class="text-xs text-stone-400">Marriott Bonvoy Luxury Collection</span>
+        </div>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="flex-1 flex flex-col min-w-0">
+        <header class="bg-white border-b border-stone-200 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+            <div>
+                <p class="text-[11px] uppercase tracking-widest text-amber-700 font-semibold">Renaissance Riverside Hotel Saigon</p>
+                <h1 class="font-serif-luxury text-2xl font-bold text-slate-900">Quản Lý Tổng Hợp Hóa Đơn Lưu Trú & Nhà Hàng</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full gold-gradient-bg flex items-center justify-center font-serif-luxury font-bold text-slate-950 text-lg">R</div>
+            </div>
+        </header>
+
+        <main class="p-6 space-y-6 flex-1">
+            <div class="luxury-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-serif-luxury text-xl font-bold text-slate-900">Danh Sách Hóa Đơn Dịch Vụ 5 Sao</h3>
+                    <a href="order.html" class="px-4 py-2 rounded-lg gold-gradient-bg text-slate-950 font-semibold text-xs uppercase tracking-wider">
+                        + Tạo Gọi Món Mới
+                    </a>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-stone-200 text-xs uppercase text-slate-500">
+                                <th class="py-3 px-4">Mã Hóa Đơn</th>
+                                <th class="py-3 px-4">Khách Hàng & Phòng</th>
+                                <th class="py-3 px-4">Tiền Phòng & Dịch Vụ Ăn Uống</th>
+                                <th class="py-3 px-4">Thời Gian (Bắt Đầu / Kết Thúc)</th>
+                                <th class="py-3 px-4">Tổng Thanh Toán</th>
+                                <th class="py-3 px-4">Trạng Thái</th>
+                                <th class="py-3 px-4 text-right">Thao Tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoiceTableBody" class="text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL XEM CHI TIẾT HÓA ĐƠN -->
+    <div id="invoiceModal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 border border-amber-500/40 shadow-2xl space-y-4">
+            <h3 class="font-serif-luxury text-2xl font-bold text-slate-900">Chi Tiết Hóa Đơn Dịch Vụ</h3>
+            <div id="invoiceModalContent" class="space-y-3 text-sm text-slate-700"></div>
+            <div class="flex justify-end pt-3">
+                <button onclick="document.getElementById('invoiceModal').classList.add('hidden')" class="px-5 py-2 rounded text-xs font-bold gold-gradient-bg text-slate-950">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/restaurant-api.js"></script>
+    <script>
+        const api = window.restaurantApi;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadInvoiceTable();
+        });
+
+        async function loadInvoiceTable() {
+            const tbody = document.getElementById('invoiceTableBody');
+            tbody.innerHTML = '';
+            let rows = [];
+            try {
+                rows = await api.getInvoiceSummary();
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-rose-600">${api.esc(err.message)}</td></tr>`;
+                return;
+            }
+
+            if (rows.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-6 text-stone-400">Chưa có hóa đơn nào trong hệ thống</td></tr>';
+                return;
+            }
+
+            rows.forEach(bk => {
+                const grandTotal = bk.roomTotal + bk.foodTotal;
+                const startTime = api.fmtDate(bk.start);
+                const endTime = bk.end ? api.fmtDate(bk.end) : '-';
+
+                const statusBadge = bk.paid
+                    ? '<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">Đã Thanh Toán</span>'
+                    : '<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">Chưa Thanh Toán</span>';
+
+                tbody.innerHTML += `
+                    <tr class="border-b border-stone-100 hover:bg-stone-50 transition">
+                        <td class="py-3 px-4 font-mono font-semibold text-slate-700">${bk.maHD ? 'HD' + bk.maHD : 'PT' + bk.maPhieu}</td>
+                        <td class="py-3 px-4">
+                            <p class="font-semibold text-slate-900">${api.esc(bk.customerName)}</p>
+                            <p class="text-xs text-amber-700">Phòng: ${api.esc(bk.roomNumber)} (${api.esc(bk.roomType)})</p>
+                        </td>
+                        <td class="py-3 px-4 text-xs">
+                            <p>Phòng: <strong>${bk.roomTotal.toLocaleString()} ₫</strong></p>
+                            <p>Nhà hàng: <strong>${bk.foodTotal.toLocaleString()} ₫</strong> (${bk.foodCount} lượt gọi)</p>
+                        </td>
+                        <td class="py-3 px-4 text-xs text-slate-600">
+                            <p class="text-emerald-700">🟢 Bắt đầu: ${startTime}</p>
+                            <p class="text-rose-700">🔴 Kết thúc: ${endTime}</p>
+                        </td>
+                        <td class="py-3 px-4 font-serif-luxury font-bold text-amber-800 text-base">${grandTotal.toLocaleString()} ₫</td>
+                        <td class="py-3 px-4">${statusBadge}</td>
+                        <td class="py-3 px-4 text-right space-x-2">
+                            <button onclick="viewInvoiceDetail(${bk.maPhieu})" class="px-3 py-1.5 rounded bg-slate-100 text-slate-800 text-xs font-semibold hover:bg-slate-200">Chi Tiết</button>
+                            ${!bk.paid ? `<a href="checkout.html?bookingId=${bk.maPhieu}" class="px-3 py-1.5 rounded gold-gradient-bg text-slate-950 text-xs font-bold inline-block">Thanh Toán</a>` : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+            window.__invoiceRows = rows;
+        }
+
+        async function viewInvoiceDetail(maPhieu) {
+            const bk = (window.__invoiceRows || []).find(r => r.maPhieu === maPhieu);
+            if (!bk) return;
+
+            let lines = [];
+            let orderHtml;
+            try {
+                lines = await api.getInvoiceDetail(maPhieu);
+            } catch (err) {
+                alert('Không tải được chi tiết hóa đơn: ' + err.message);
+                return;
+            }
+
+            if (lines.length === 0) {
+                orderHtml = '<p class="text-xs text-stone-400">Không có dịch vụ gọi món nhà hàng nào.</p>';
+            } else {
+                orderHtml = '<ul class="list-disc pl-5 space-y-1 text-xs text-slate-600">';
+                lines.forEach(l => {
+                    orderHtml += `<li><strong>${api.fmtDate(l.time)}</strong>: ${api.esc(l.name)} (x${l.quantity}) = <strong>${l.total.toLocaleString()} ₫</strong></li>`;
+                });
+                orderHtml += '</ul>';
+            }
+
+            document.getElementById('invoiceModalContent').innerHTML = `
+                <div class="p-4 bg-stone-50 rounded-xl space-y-2 border border-stone-200">
+                    <p><strong>Mã Phiếu Thuê:</strong> ${bk.maPhieu}</p>
+                    <p><strong>Khách Hàng:</strong> ${api.esc(bk.customerName)}</p>
+                    <p><strong>Số Phòng:</strong> ${api.esc(bk.roomNumber)} (${api.esc(bk.roomType)})</p>
+                    <p><strong>Thời Gian Lưu Trú:</strong> Từ ${api.fmtDate(bk.start)} đến ${bk.end ? api.fmtDate(bk.end) : 'nay'}</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-slate-900 mb-1">1. Tiền Phòng: <span class="font-normal text-amber-800">${bk.roomTotal.toLocaleString()} ₫</span></p>
+                    <p class="font-semibold text-slate-900 mb-1">2. Dịch Vụ Nhà Hàng & Room Service:</p>
+                    ${orderHtml}
+                </div>
+                <div class="pt-3 border-t border-stone-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-900">Tổng Thanh Toán:</span>
+                    <span class="font-serif-luxury text-2xl font-bold text-amber-800">${(bk.roomTotal + bk.foodTotal).toLocaleString()} ₫</span>
+                </div>
+            `;
+            document.getElementById('invoiceModal').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
